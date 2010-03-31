@@ -1,0 +1,180 @@
+body {
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+.ErrorListView, .errorlistview,
+.ErrorMessageView, .errormessageview,
+.error_message {
+	background-color: #FFFDE1;
+	border: solid 1px #990000;
+	color: #990000;
+	margin-bottom: 15px;
+	padding: 15px;
+}
+.ErrorListView ol, .errorlistview ol,
+.ErrorMessageView ol, .errormessageview ol,
+.error_message ol {
+	margin-bottom: 0px;
+}
+.ErrorListView h2, .errorlistview h2,
+.ErrorMessageView h2, .errormessageview h2,
+.error_message h2 {
+	margin: 0px;
+	font-size: 125%;
+}
+
+
+.ErrorMessageView, .errormessageview {
+	text-align: center;
+}
+
+label.error {
+	color: #900;
+}
+
+input.error, textarea.error, select.error {
+	background-color: #fdd;
+}
+
+/*****************************************************
+ *              Table list
+ *****************************************************/
+table.list {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 15px;
+}
+
+table.list .odd {
+	background-color: #eee;
+}
+table.list .even {
+	background-color: inherit;
+}
+
+table.list th {
+	padding: 4px;
+	padding-top: 5px;
+	border-left: 1px solid #CCC;
+	background-color: #4795CA;
+}
+
+table.list th a {
+	color: #fff;
+}
+
+table.list td {
+	padding: 4px;
+	border-left: 1px solid #CCC;
+}
+table.list tr:hover td {
+	background-color: #FFFFCC;
+}
+
+/*****************************************************
+ *              Pager-related Styles
+ *****************************************************/
+.chitin-pager {
+	font-family: Arial, Helvetica, sans-serif;
+	margin-bottom: 5px;
+}
+
+.chitin-pager .now-showing-area {
+	font-size: 11pt;
+}
+
+.chitin-pager a, .chitin-pager span, .chitin-pager a:visited {
+	background-color: #F0F0F0;
+	border: 1px solid #929192;
+	color: #4294BF;
+	font-size: 8pt;
+	margin-right: 3px;
+	text-align: center;
+	text-decoration: none;
+	padding: 1px 5px;
+}
+
+.chitin-pager a.next, chitin-pager span.next {
+	width: 44px;
+}
+
+.chitin-pager .links-area .previous {
+	width: 60px;
+}
+
+.chitin-pager a:hover, .chitin-pager a:hover:visited {
+	background-color: #E2E7EC;
+	border: 1px solid #858484;
+}
+
+.chitin-pager span {
+	color: #B0AEAE;
+	border: 1px solid #B0AEAE;
+}
+
+.chitin-pager .current {
+	background-color: #74A5CD;
+	border: 1px solid #5D5B5C;
+	color: white;
+	font-weight: bold;
+}
+
+.chitin-pager span.border-separator {
+	background-color: transparent;
+	border: none;
+	font-weight: bold;
+	padding: 2px 4px;
+}
+
+.chitin-pager .links-area {
+	margin-top: 5px;
+}
+
+/*****************************************************
+ *              Error Handler Styles
+ *****************************************************/
+table.ChitinErrorHandlerBacktrace {
+	border: 1px #666 solid;
+	background-color: #eee;
+	border-collapse: collapse;
+	margin-bottom: 10px;
+}
+table.ChitinErrorHandlerBacktrace th {
+	text-align: left;
+}
+table.ChitinErrorHandlerBacktrace th,
+table.ChitinErrorHandlerBacktrace td {
+	border: 1px #666 solid;
+	vertical-align: top;
+	font-size: 80%;
+	padding: 3px;
+}
+table.ChitinErrorHandlerBacktrace pre {
+	margin: 0px;
+}
+/**********************************************************************
+ *                    Admin Styles
+ *********************************************************************/
+	
+.admin th,
+span.admin {
+	background-color: #CDE0CE;
+	color: #003E7E;
+	font-weight: bold;
+	padding: 5px;
+	text-align: left;
+}
+.admin td {
+	padding: 8px 5px 0px 5px;
+}			
+.admin_required {
+	color: #990000;
+}
+.admin_listing {
+	border: 1px solid #333333;
+	background-color: #FFFEE7;
+}	
+.admin_listing td,
+.admin_listing th {	
+	padding: 10px;
+}

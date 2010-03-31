@@ -1,0 +1,1 @@
+../../TemplateIntern/templates/view_index.php

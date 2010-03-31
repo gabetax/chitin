@@ -1,0 +1,1 @@
+../../ModelIntern/templates/model.php

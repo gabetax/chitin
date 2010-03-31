@@ -1,0 +1,7 @@
+RewriteEngine on
+
+# Dispatch requests for files that do not exist, and that do not have an extension
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule !\. - [C]
+RewriteRule .* dispatcher.php?dispatch_original_path=$0 [QSA]
