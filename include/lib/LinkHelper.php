@@ -65,6 +65,7 @@ class LinkHelper {
 		return substr($url, strlen($trim));
 	}
 	
+	
 	/**
 	 * Return a URL for displaying the current page sorted by a particular column
 	 *
@@ -91,6 +92,86 @@ class LinkHelper {
 		return $url->get();
 	}
 	
+	
+	/**
+	 * Determines whether or not a link matches the current URL
+	 *
+	 * <a href="blah/" class="<?php if LinkHelper::isCurrent("blah/") echo 'current'">Blah</a>
+	 *
+	 * @param mixed $params A string URL to be tested (same as 'path_to_test'), or An array of parameters:
+	 * - string  current_url    - the URL of the current page.  isCurrent() will test a path against this URL
+	 * -   bool  decode_url?    - if true, the current_url is passed through urldecode()
+	 * -   bool  match_folders? - if true, tests if the path_to_test is one of the folders in the current URL
+	 * - string  path_to_test   - the relative path that may or may not be part of the current URL
+	 * @return string boolean
+	 */
+	function isCurrent ($params) {
+		$default_options = array(
+			"current_url" => (isset($_SERVER['REDIRECT_URL'])) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI'],
+			"decode_url?" => true,
+			"match_folders?" => true,
+			"path_to_test" => '/',
+			"match_whole" => false,
+		);
+
+		// Merge passed parameters with the defaults.  If only a string is passed, assume
+		// that it is the path which we want to test is current
+		$options = array_merge($default_options, (is_array($params)) ? $params : array('path_to_test' => (string) $params));
+
+		// Trim the current URL, just in case.  Optionally decode any '%' escape sequences
+		$options['current_url'] = trim( ($options['decode_url?']) ? urldecode($options['current_url']) : $options['current_url']);
+
+		// Check whether or not the path to test exactly matches the current URL.
+		// This is useful for checking the home-page URL, without subdirectories,
+		// for which the standard regex comparison below doesn't work.
+		if ($options['match_whole'])
+			return ($options['current_url'] == $options['path_to_test']);
+
+		// Figure out whether or not 'path_to_test' is in 'current_url'.  substr() is faster than preg_match(), so we'll use
+		// substr() for our basic case: a filename appearing at the end of the current_url.  Folder names can appear anywhere
+		// in current_url, so we will need to match against a pattern that tests for folder names appearing at the beginning of
+		// the URL or immediately after a /.  Our pattern assumes that there will be something in the URL after the folder name
+		// as well (our substr() match will catch any folder names appearing at the end of the URL).  Folder matching via
+		// preg_match() will only run if 'match_folders?' is true, and if the path_to_test looks like a folder
+		$pattern = "/\/" . preg_quote($options['path_to_test'], '/') . ".+/";
+		return ((substr($options['current_url'], -1 * strlen($options['path_to_test'])) === $options['path_to_test']) || (
+			$options['match_folders?'] && 
+			($options['path_to_test'][strlen($options['path_to_test']) - 1] == '/') &&
+			preg_match($pattern, $options['current_url']))
+		) ? true : false;
+	}
+
+
+	/**
+	 * Prints a class name or class attribute if a link matches the current URL
+	 * 
+	 * <a href="blah/" <?php echo LinkHelper::markCurrent("blah/");?>>Blah</a>
+	 *
+	 * @param mixed $params A string URL to be tested (same as 'path_to_test'), or An array of parameters:
+	 * - string  class - the name of the class to be used if the path_to_test matches the current URL
+	 * - string  class_attribute_wrapper - a formatted string to wrap the class name if print_class_attribute? is set
+	 * - string  path_to_test   - the relative path that may or may not be part of the current URL
+	 * -   bool  print_class_attribute?    - if true (default), the entire class attribute (e.g. class="some-class-name") is returned
+	 * @return string boolean
+	 */
+	function markCurrent ($params) {
+		$default_options = array(
+			"class" => 'current',
+			"class_attribute_wrapper" => ' class="%s"',
+			"path_to_test" => '',
+			"print_class_attribute?" => true,
+			"match_whole" => false,
+		);
+
+		// Merge passed parameters with the defaults.  If only a string is passed, assume
+		// that it is the path which we want to test is current
+		$options = array_merge($default_options, (is_array($params)) ? $params : array('path_to_test' => (string) $params));
+
+		return (LinkHelper::isCurrent($options)) ? 
+			($options['print_class_attribute?']) ? 
+				sprintf($options['class_attribute_wrapper'], $options['class']) : $options['class']
+			: false;
+	}
 
 }
 ?>
